@@ -9,15 +9,45 @@ function Contacts() {
     phone: "",
   });
 
-  const changeHandeler
+  const addHandeler = () => {
+    console.log(contact);
+  };
+  const changeHandeler = (event) => {
+    const name = event.target.name;
+    setContact((contact) => ({ ...contact, [name]: event.target.value }));
+  };
   return (
     <div>
       <div>
-        <input type="text" placeholder="Name" value={contact.name} />
-        <input type="text" placeholder="Last Name" value={contact.lastName} />
-        <input type="email" placeholder="Email" value={contact.email} />
-        <input type="number" placeholder="Phone" value={contact.phone} />
-        <button>Add Contact</button>
+        <input
+          name="name"
+          type="text"
+          placeholder="Name"
+          value={contact.name}
+          onChange={changeHandeler}
+        />
+        <input
+          name="lastName"
+          type="text"
+          placeholder="Last Name"
+          value={contact.lastName}
+          onChange={changeHandeler}
+        />
+        <input
+          name="email"
+          type="email"
+          placeholder="Email"
+          value={contact.email}
+          onChange={changeHandeler}
+        />
+        <input
+          name="phone"
+          type="number"
+          placeholder="Phone"
+          value={contact.phone}
+          onChange={changeHandeler}
+        />
+        <button onClick={addHandeler}>Add Contact</button>
       </div>
     </div>
   );
