@@ -2,18 +2,14 @@ import React from "react";
 import { useState } from "react";
 
 import Contactslist from "./Contactslist";
-
-const inputs = [
-  { type: "text", name: "name", placeholder: "Name" },
-  { type: "text", name: "lastname", placeholder: "LastName" },
-  { type: "email", name: "email", placeholder: "Email" },
-  { type: "number", name: "phone", placeholder: "Phone Number" },
-];
+import inputs from "../constants/inputs";
+import { v7 } from "uuid";
 
 function Contacts() {
   const [alert, setAlert] = useState("");
   const [contacts, setContacts] = useState([]);
   const [contact, setContact] = useState({
+    id: "",
     name: "",
     lastName: "",
     email: "",
@@ -35,9 +31,9 @@ function Contacts() {
       return;
     }
     setAlert("");
-    setContacts((contacts) => [...contacts, contact]);
+    const newContact = { ...contact, id: v7() };
+    setContacts((contacts) => [, ...contacts, newContact]);
     setContact({ name: "", lastName: "", email: "", phone: "" });
-    console.log(contacts);
   };
   const changeHandeler = (event) => {
     const name = event.target.name;
