@@ -1,15 +1,19 @@
 import React from "react";
+import ContactItem from "./ContactItem";
 
 function Contactslist({ contacts }) {
-  console.log(contacts);
   return (
     <div>
       <h3>Contacts List</h3>
-      <ul>
-        {contacts.map((contact) => (
-          <li key={contact.id}>{contact.name}</li>
-        ))}
-      </ul>
+      {contacts.length ? (
+        <ul>
+          {contacts.map((contact) => (
+            <ContactItem key={contact.id} data={contact} />
+          ))}
+        </ul>
+      ) : (
+        <p>No Contacts Yet!</p>
+      )}
     </div>
   );
 }

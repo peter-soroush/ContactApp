@@ -32,7 +32,7 @@ function Contacts() {
     }
     setAlert("");
     const newContact = { ...contact, id: v7() };
-    setContacts((contacts) => [, ...contacts, newContact]);
+    setContacts((contacts) => [...contacts, newContact]);
     setContact({ name: "", lastName: "", email: "", phone: "" });
   };
   const changeHandeler = (event) => {
