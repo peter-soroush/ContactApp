@@ -3,7 +3,15 @@ import { useState } from "react";
 
 import Contactslist from "./Contactslist";
 
+const inputs = [
+  { type: "text", name: "name", placeholder: "Name" },
+  { type: "text", name: "lastname", placeholder: "LastName" },
+  { type: "email", name: "email", placeholder: "Email" },
+  { type: "number", name: "phone", placeholder: "Phone Number" },
+];
+
 function Contacts() {
+  const [alert, setAlert] = useState("");
   const [contacts, setContacts] = useState([]);
   const [contact, setContact] = useState({
     name: "",
@@ -13,6 +21,20 @@ function Contacts() {
   });
 
   const addHandeler = () => {
+    if (!contact.name) {
+      setAlert("Please Enter Valid Name");
+      return;
+    } else if (!contact.lastName) {
+      setAlert("Please Enter Valid LastName");
+      return;
+    } else if (!contact.email) {
+      setAlert("Please Enter Valid Email");
+      return;
+    } else if (!contact.phone) {
+      setAlert("Please Enter Valid Phone Number");
+      return;
+    }
+    setAlert("");
     setContacts((contacts) => [...contacts, contact]);
     setContact({ name: "", lastName: "", email: "", phone: "" });
     console.log(contacts);
@@ -24,36 +46,19 @@ function Contacts() {
   return (
     <div>
       <div>
-        <input
-          name="name"
-          type="text"
-          placeholder="Name"
-          value={contact.name}
-          onChange={changeHandeler}
-        />
-        <input
-          name="lastName"
-          type="text"
-          placeholder="Last Name"
-          value={contact.lastName}
-          onChange={changeHandeler}
-        />
-        <input
-          name="email"
-          type="email"
-          placeholder="Email"
-          value={contact.email}
-          onChange={changeHandeler}
-        />
-        <input
-          name="phone"
-          type="number"
-          placeholder="Phone"
-          value={contact.phone}
-          onChange={changeHandeler}
-        />
+        {inputs.map((input, index) => (
+          <input
+            key={index}
+            name={input.name}
+            type={input.type}
+            placeholder={input.placeholder}
+            value={contact[input.name]}
+            onChange={changeHandeler}
+          />
+        ))}
         <button onClick={addHandeler}>Add Contact</button>
       </div>
+      <div className="alert">{alert && <p>{alert}</p>}</div>
       <Contactslist contacts={contacts} />
     </div>
   );
