@@ -16,6 +16,11 @@ function Contacts() {
     phone: "",
   });
 
+  const deleteHandeler = (id) => {
+    const newContacts = contacts.filter((contact) => contact.id !== id);
+    setContacts(newContacts);
+  };
+
   const addHandeler = () => {
     if (!contact.name) {
       setAlert("Please Enter Valid Name");
@@ -55,7 +60,7 @@ function Contacts() {
         <button onClick={addHandeler}>Add Contact</button>
       </div>
       <div className="alert">{alert && <p>{alert}</p>}</div>
-      <Contactslist contacts={contacts} />
+      <Contactslist contacts={contacts} deleteHandeler={deleteHandeler} />
     </div>
   );
 }
