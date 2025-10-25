@@ -7,11 +7,12 @@ function Contactslist({ contacts, deleteHandeler }) {
       <h3>Contacts List</h3>
       {contacts.length ? (
         <ul className={styles.contacts}>
-          {contacts.map((contact) => (
+          {contacts.map((contact, index) => (
             <ContactItem
               key={contact.id}
               data={contact}
               deleteHandeler={deleteHandeler}
+              index={index}
             />
           ))}
         </ul>

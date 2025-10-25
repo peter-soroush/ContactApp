@@ -1,11 +1,13 @@
 import React from "react";
-
+import style from "./ContactItem.module.css";
 function ContactItem({
   data: { id, name, lastName, email, phone },
   deleteHandeler,
+  index,
 }) {
   return (
-    <li key={id}>
+    <li className={style.item}>
+      <p>{index + 1}</p>
       <p>
         {name} {lastName}
       </p>
