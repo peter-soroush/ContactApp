@@ -11,6 +11,7 @@ function Contacts() {
   const [currentId, setID] = useState("");
   const [editContactBtn, setEdit] = useState(false);
   const [alert, setAlert] = useState("");
+  const [success, setSuccess] = useState("");
   const [contacts, setContacts] = useState([]);
   const [contact, setContact] = useState({
     id: "",
@@ -23,7 +24,6 @@ function Contacts() {
   const deleteHandeler = (id) => {
     const newContacts = contacts.filter((contact) => contact.id !== id);
     setContacts(newContacts);
-    console.log(newContacts);
   };
 
   const editHandeler = (id, name, lastName, email, phone) => {
@@ -33,11 +33,9 @@ function Contacts() {
   };
 
   const editActionHandeler = () => {
-    console.log({ currentId });
     deleteHandeler(currentId);
-    setEdit(false);
-
     addHandeler();
+    setEdit(false);
   };
   const addHandeler = () => {
     if (!contact.name) {
@@ -57,6 +55,16 @@ function Contacts() {
     const newContact = { ...contact, id: v7() };
     setContacts((contacts) => [...contacts, newContact]);
     setContact({ name: "", lastName: "", email: "", phone: "" });
+
+    setSuccess(
+      editContactBtn
+        ? "Changes has been made Succesfully"
+        : `Contact ${contact.name} has been added successfully`
+    );
+
+    setTimeout(() => {
+      setSuccess("");
+    }, 4000);
   };
   const changeHandeler = (event) => {
     const name = event.target.name;
@@ -82,7 +90,13 @@ function Contacts() {
           {editContactBtn ? "Edit" : "Add Contact"}
         </button>
       </div>
-      <div className={Styles.alert}>{alert && <p>{alert}</p>}</div>
+      {alert ? (
+        <div className={Styles.alert}>{alert && <p>{alert}</p>}</div>
+      ) : (
+        ""
+      )}
+      <div className={Styles.success}>{success && <p>{success}</p>}</div>
+
       <Contactslist
         contacts={contacts}
         deleteHandeler={deleteHandeler}

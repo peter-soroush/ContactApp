@@ -65,6 +65,21 @@
   font-size: 1rem;
 }
 
+.success {
+  width: 100%;
+  height: 40px;
+  margin: 5px 0 25px;
+}
+
+.success p {
+  background-color: #07e455;
+  color: #000;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
 @media (max-width: 500px) {
   .form input {
     width: 90%;
