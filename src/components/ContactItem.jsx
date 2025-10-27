@@ -4,12 +4,12 @@ function ContactItem({
   data: { id, name, lastName, email, phone },
   deleteHandeler,
   index,
+  editHandeler,
 }) {
   return (
     <li className={style.item}>
-      <p>{index + 1}</p>
       <p>
-        {name} {lastName}
+        {index + 1} | {name} {lastName}
       </p>
       <p>
         <span>📧</span>
@@ -21,6 +21,9 @@ function ContactItem({
       </p>
       <p>
         <button onClick={() => deleteHandeler(id)}>🗑️</button>
+        <button onClick={() => editHandeler(id, name, lastName, email, phone)}>
+          ✏️
+        </button>
       </p>
     </li>
   );

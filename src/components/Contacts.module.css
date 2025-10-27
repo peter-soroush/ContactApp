@@ -42,6 +42,10 @@
   transition: 0.2s all ease-in-out;
 }
 
+.editBTN {
+  background-color: #07d553 !important;
+}
+
 .form button:hover {
   box-shadow: #0c2ad487 0px 7px 29px 0px;
 }

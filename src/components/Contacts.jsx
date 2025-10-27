@@ -8,6 +8,8 @@ import { v7 } from "uuid";
 import Styles from "./Contacts.module.css";
 
 function Contacts() {
+  const [currentId, setID] = useState("");
+  const [editContactBtn, setEdit] = useState(false);
   const [alert, setAlert] = useState("");
   const [contacts, setContacts] = useState([]);
   const [contact, setContact] = useState({
@@ -21,8 +23,22 @@ function Contacts() {
   const deleteHandeler = (id) => {
     const newContacts = contacts.filter((contact) => contact.id !== id);
     setContacts(newContacts);
+    console.log(newContacts);
   };
 
+  const editHandeler = (id, name, lastName, email, phone) => {
+    setEdit(true);
+    setContact({ name: name, lastName: lastName, email: email, phone: phone });
+    setID(id);
+  };
+
+  const editActionHandeler = () => {
+    console.log({ currentId });
+    deleteHandeler(currentId);
+    setEdit(false);
+
+    addHandeler();
+  };
   const addHandeler = () => {
     if (!contact.name) {
       setAlert("Please Enter Valid Name");
@@ -59,10 +75,19 @@ function Contacts() {
             onChange={changeHandeler}
           />
         ))}
-        <button onClick={addHandeler}>Add Contact</button>
+        <button
+          onClick={editContactBtn ? editActionHandeler : addHandeler}
+          className={editContactBtn ? Styles.editBTN : ""}
+        >
+          {editContactBtn ? "Edit" : "Add Contact"}
+        </button>
       </div>
       <div className={Styles.alert}>{alert && <p>{alert}</p>}</div>
-      <Contactslist contacts={contacts} deleteHandeler={deleteHandeler} />
+      <Contactslist
+        contacts={contacts}
+        deleteHandeler={deleteHandeler}
+        editHandeler={editHandeler}
+      />
     </div>
   );
 }
