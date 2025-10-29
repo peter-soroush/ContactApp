@@ -11,6 +11,7 @@ function Contacts() {
   const [currentId, setID] = useState("");
   const [editContactBtn, setEdit] = useState(false);
   const [alert, setAlert] = useState("");
+
   const [success, setSuccess] = useState("");
   const [contacts, setContacts] = useState([]);
   const [contact, setContact] = useState({
@@ -20,9 +21,24 @@ function Contacts() {
     email: "",
     phone: "",
   });
+  const [ContactsBeforeSearch, setContactsBeforeSearch] = useState(...contacts);
 
   const deleteHandeler = (id) => {
     const newContacts = contacts.filter((contact) => contact.id !== id);
+    setContacts(newContacts);
+    setContactsBeforeSearch(contacts);
+  };
+
+  const selectSortBy = (event) => {
+    const key = event.target.value;
+
+    const newContacts = [...contacts].sort((a, b) => {
+      const A = (a?.[key] ?? "").toString().toLowerCase();
+      const B = (b?.[key] ?? "").toString().toLowerCase();
+
+      return A.localeCompare(B, "en", { numeric: true, sensitivity: "base" });
+    });
+
     setContacts(newContacts);
   };
 
@@ -30,6 +46,25 @@ function Contacts() {
     setEdit(true);
     setContact({ name: name, lastName: lastName, email: email, phone: phone });
     setID(id);
+  };
+
+  const Searchhandeler = (event) => {
+    const searchText = event.target.value;
+    console.log({ searchText });
+
+    if (searchText !== "") {
+      const newContacts = contacts.filter(
+        (contact) =>
+          contact.name == searchText ||
+          contact.lastName == searchText ||
+          contact.email == searchText ||
+          contact.phone == searchText
+      );
+      setContacts(newContacts);
+      console.log(newContacts);
+    } else {
+      setContacts(ContactsBeforeSearch);
+    }
   };
 
   const editActionHandeler = () => {
@@ -55,6 +90,7 @@ function Contacts() {
     const newContact = { ...contact, id: v7() };
     setContacts((contacts) => [...contacts, newContact]);
     setContact({ name: "", lastName: "", email: "", phone: "" });
+    setContactsBeforeSearch(contacts);
 
     setSuccess(
       editContactBtn
@@ -64,7 +100,7 @@ function Contacts() {
 
     setTimeout(() => {
       setSuccess("");
-    }, 4000);
+    }, 2500);
   };
   const changeHandeler = (event) => {
     const name = event.target.name;
@@ -95,8 +131,29 @@ function Contacts() {
       ) : (
         ""
       )}
+
       <div className={Styles.success}>{success && <p>{success}</p>}</div>
 
+      <div className={Styles.userOptions}>
+        <select
+          name="SortBy"
+          id=""
+          onChange={selectSortBy}
+          className={Styles.sortOption}
+          placeholder="Sort By"
+        >
+          <option value="">Sort By</option>
+          <option value="name">Name</option>
+          <option value="lastName">Last name</option>
+          <option value="email">Email</option>
+          <option value="phone">Phone Number</option>
+        </select>
+        <input
+          type="text"
+          className={Styles.searchBox}
+          onChange={Searchhandeler}
+        />
+      </div>
       <Contactslist
         contacts={contacts}
         deleteHandeler={deleteHandeler}

@@ -6,7 +6,6 @@ function App() {
     <>
       <Header />
       <Contacts />
-      <h1>Contact APP</h1>
     </>
   );
 }
